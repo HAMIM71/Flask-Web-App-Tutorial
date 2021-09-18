@@ -3,6 +3,21 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+import pyrebase
+
+config = {
+    'apiKey': "AIzaSyAdNWl10pzwhawDFR-pKvXgJ_jz24j9pHI",
+    'authDomain': "space-667e4.firebaseapp.com",
+    'projectId': "space-667e4",
+    'storageBucket': "space-667e4.appspot.com",
+    'messagingSenderId' : "403454559792",
+    'appId' : "1:403454559792:web:7f73a741c1ba2b0c194ff5",
+    'measurementId' : "G-W0P1BRD9G0"
+}
+
+firebase = pyrebase.initialize_app(config)
+authx = firebase.auth()
+
 
 
 auth = Blueprint('auth', __name__)
@@ -57,6 +72,7 @@ def sign_up():
         else:
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(
                 password1, method='sha256'))
+            auth.sign_in_with_email_and_password(email, password)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
