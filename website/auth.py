@@ -9,20 +9,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
-import pyrebase
 
-config = {
-    'apiKey': "AIzaSyAdNWl10pzwhawDFR-pKvXgJ_jz24j9pHI",
-    'authDomain': "space-667e4.firebaseapp.com",
-    'projectId': "space-667e4",
-    'storageBucket': "space-667e4.appspot.com",
-    'messagingSenderId' : "403454559792",
-    'appId' : "1:403454559792:web:7f73a741c1ba2b0c194ff5",
-    'measurementId' : "G-W0P1BRD9G0"
-}
-
-firebase = pyrebase.initialize_app(config)
-authx = firebase.auth()
 
 
 @auth.route('/login', methods=['GET', 'POST'])
